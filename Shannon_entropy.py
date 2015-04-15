@@ -35,7 +35,7 @@ def Shannon_entropy(seq, k):
     for kmer in sliding_window(seq, k):        
         new_count = c[kmer] + 1
         c[kmer] = new_count
-    s = -0
+    s = 0
     for i in c:
         #print i, c[i]
         p = float(c[i]) / (len(seq) - k + 1)
