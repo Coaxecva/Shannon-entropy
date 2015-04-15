@@ -37,7 +37,7 @@ def Shannon_entropy(seq, k):
         c[kmer] = new_count
     s = -0
     for i in c:
-        print i, c[i]
+        #print i, c[i]
         p = float(c[i]) / (len(seq) - k + 1)
         s += p * math.log(p, 2)
     return (-s)
