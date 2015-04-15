@@ -1,5 +1,6 @@
-import sys
-from itertools import groupby
+import sys, math
+from itertools import groupby, islice
+from collections import Counter
 
 def fasta_iter(fasta_name):
     """
@@ -29,8 +30,21 @@ def sliding_window(seq, n=2):
         result = result[1:] + (elem,)
         yield result
 
-fasta = sys.argv[1]
-print fasta
-g = fasta_iter(fasta)
-for v in g:
-    print v[0], len(v[1])
+def Shannon_entropy(seq, k):
+    c = Counter()    
+    for kmer in sliding_window(seq, k):        
+        new_count = c[kmer] + 1
+        c[kmer] = new_count
+    s = -0
+    for i in c:
+        print i, c[i]
+        p = float(c[i]) / (len(seq) - k + 1)
+        s += p * math.log(p, 2)
+    return (-s)
+
+if __name__ == '__main__':
+    fasta, k = sys.argv[1], sys.argv[2]
+
+    for v in fasta_iter(fasta):
+        print Shannon_entropy(v[1], int(k))
+
